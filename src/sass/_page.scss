@@ -1,0 +1,19 @@
+@use "utils/colors" as colors;
+@use "utils/reset";
+@use "utils/typography";
+@use "utils/components";
+@use "nav";
+@use "footer";
+
+body {
+    color: colors.$black;
+    width: 100%;
+}
+
+p {
+    color: colors.$text-blue;
+}
+
+.h2 {
+    margin-bottom: 4.2rem;
+}

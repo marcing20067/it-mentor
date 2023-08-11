@@ -1,0 +1,39 @@
+@use "colors" as colors;
+
+.wrapper {
+    margin: 0 auto;
+    width: 90%;
+}
+
+.section-padding {
+    padding: 7rem 0;
+}
+
+.button {
+    display: block;
+    padding: 0.8rem 0;
+    width: 12.2rem;
+    color: colors.$white;
+    background-color: colors.$primary-blue;
+    border-radius: 3px;
+    border: none;
+    transition: background-color .3s ease-out;
+    text-align: center;
+
+    &:hover {
+        background-color: colors.$primary-blue-darker;
+    }
+}
+
+@media (min-width: 768px) {
+    .wrapper {
+        width: 80%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .wrapper {
+        width: 75%;
+        max-width: 1200px;
+    }
+}

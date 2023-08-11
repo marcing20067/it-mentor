@@ -1,0 +1,49 @@
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 1.6rem;
+    font-family: "Poppins", sans-serif;
+}
+
+body,
+.h1,
+.h2,
+.h3 {
+    line-height: 135%;
+}
+
+.h1,
+.h2 {
+    font-weight: 700;
+}
+
+.h1 {
+    font-size: 3rem;
+}
+
+.h2 {
+    font-size: 3.6rem;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.h3 {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+p, label {
+    line-height: 140%;
+}
+
+.button {
+    font: inherit;
+}
+
+@media (min-width: 1024px) {
+    .h1 {
+        font-size: 5.2rem;
+    }
+}

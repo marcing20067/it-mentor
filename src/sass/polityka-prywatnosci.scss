@@ -1,0 +1,59 @@
+@use "page";
+@use "utils/colors" as colors;
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+}
+
+.privacy-policy {
+    margin-top: 7rem;
+
+    &__list {
+        &-item {
+            margin-bottom: 1.6rem;
+        }
+    }
+}
+
+.policy-list {
+    list-style: none;
+
+    &__item {
+        margin-bottom: 2rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        &-number {
+            font-size: 1.8rem;
+            font-weight: 500;
+        }
+    }
+}
+
+.policy-nested {
+    list-style: disc;
+    list-style-position: inside;
+}
+
+.copyright {
+    &__h3 {
+        margin: 0.8rem 0 1.2rem 0;
+    }
+
+    &__list {
+        list-style: none;
+    }
+
+    &__link {
+        color: colors.$primary-blue-darker;
+        text-decoration: none;
+    }
+}

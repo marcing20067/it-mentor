@@ -1,0 +1,131 @@
+@use "utils/colors" as colors;
+@use "utils/hamburger";
+
+body,
+html {
+    height: 100%;
+}
+
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 3;
+
+    &--scroll-bgc {
+        background-color: colors.$white;
+    }
+
+    &--scroll-border {
+        border-bottom: 1px solid colors.$border-gray;
+    }
+
+    &__container {
+        height: 7rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__title {
+        font-weight: 500;
+        font-size: 1.8rem;
+        text-decoration: none;
+        color: colors.$black;
+
+        &-span {
+            color: colors.$primary-blue;
+        }
+    }
+}
+
+.nav-list {
+    position: absolute;
+    top: 100%;
+    list-style: none;
+    height: calc(100vh - 7rem);
+    z-index: 2;
+    background-color: #fff;
+    transform: translateX(0);
+    width: 100%;
+    left: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.6s ease-out;
+
+    &__item-link {
+        color: inherit;
+        text-decoration: none;
+        padding: 1.8rem 3.6rem;
+        font-size: 1.8rem;
+        display: block;
+        color: colors.$text-blue;
+        transition: color 0.3s ease-out;
+
+        &:hover {
+            color: colors.$primary-blue;
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .nav {
+        &__title {
+            font-size: 2.2rem;
+        }
+    }
+}
+
+@media (min-width: 1024px) {
+    .nav {
+        &__container {
+            justify-content: space-between;
+        }
+
+        &__hamburger {
+            display: none;
+        }
+
+        &__title {
+            font-size: 2.2rem;
+        }
+    }
+
+    .nav-list {
+        position: static;
+        height: auto;
+        width: fit-content;
+        flex-direction: row;
+        column-gap: 0.6rem;
+
+        &__item-link {
+            padding: 1.5rem;
+            font-size: 1.6rem;
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .block-scroll {
+        overflow: hidden;
+    }
+
+    .nav {
+        &--active &-list {
+            display: flex;
+            transform: translateX(-100%);
+            transition:
+                display 0s,
+                transform 0.6s ease-out;
+        }
+    }
+
+    .nav-list {
+        display: none;
+        transition:
+            transform 0.6s ease-out,
+            display 0s 0.6s;
+    }
+}
