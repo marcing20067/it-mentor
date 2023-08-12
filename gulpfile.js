@@ -10,7 +10,7 @@ const clean = require("gulp-clean");
 const browserSync = require("browser-sync").create();
 const kit = require("gulp-kit-2");
 const reload = browserSync.reload;
-
+const ghpages = require('gh-pages');
 const paths = {
   img: "./src/img/**",
   html: "./src/html/**/*.kit",
@@ -82,7 +82,12 @@ function moveImagesToDist(done) {
   done();
 }
 
+function ghPages(done) {
+  ghpages.publish('dist', done);
+}
+
 const mainFunctions = parallel(sassCompiler, javaScript, moveImagesToDist);
 exports.cleanStuff = cleanStuff;
 exports.default = series(mainFunctions, startBrowserSync, watchForChanges);
 exports.build = parallel(handleKits, mainFunctions);
+exports.deplay = series(handleKits, mainFunctions,  ghPages)
