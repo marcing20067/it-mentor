@@ -90,4 +90,4 @@ const mainFunctions = parallel(sassCompiler, javaScript, moveImagesToDist);
 exports.cleanStuff = cleanStuff;
 exports.default = series(mainFunctions, startBrowserSync, watchForChanges);
 exports.build = parallel(handleKits, mainFunctions);
-exports.deplay = series(handleKits, mainFunctions,  ghPages)
+exports.deploy = series(handleKits, mainFunctions,  ghPages)
