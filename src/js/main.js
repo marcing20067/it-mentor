@@ -9,31 +9,36 @@ const faqTexts = document.querySelectorAll(".faq-item__text");
 const faqContainers = document.querySelectorAll(".faq-item__container");
 const inputs = document.querySelectorAll(".contact-form__field-input");
 const form = document.querySelector("form");
-const focusableChilds = nav.querySelectorAll(
-  'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])'
-);
-const firstFocusableChild = focusableChilds[0];
-const lastFocusableChild = focusableChilds[focusableChilds.length - 1];
+
+const getFocusableChilds = (box) => {
+  return box.querySelectorAll(
+    'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])'
+  );
+};
+
+const navFocusableChilds = getFocusableChilds(nav);
+const navFirstFocusableChild = navFocusableChilds[0];
+const navLastFocusableChild = navFocusableChilds[navFocusableChilds.length - 1];
 let isTrappedTabulation = false;
 
-// UI ELEMENTS
+// NAV
 const handleNav = () => {
   hamburgerButton.classList.toggle("is-active");
   nav.classList.toggle("nav--active");
+  nav.classList.toggle("nav--scroll-bgc", nav.classList.contains("nav--active") || window.scrollY > 0)
   document.body.classList.toggle("block-scroll");
   isTrappedTabulation = !isTrappedTabulation;
   updateNavLinksTabIndex();
 };
 
-const toggleNavBackground = () => {
-  nav.classList.toggle("nav--scroll-bgc", window.scrollY > 0);
-  nav.classList.toggle(
-    "nav--scroll-border",
-    window.scrollY > window.innerHeight
-  );
+const updateNavLinksTabIndex = () => {
+  navLinks.forEach((link) => {
+    link.tabIndex = isTrappedTabulation || window.innerWidth > 1024 ? 0 : -1;
+  });
 };
 
-const handleFaq = (faqContainer, i) => {
+// FAQ
+const handleFaq = (faqContainer, i, containerFocusableChilds) => {
   const faqItem = faqContainer.closest(".faq-item");
 
   faqIconLines[i].classList.toggle("faq-item__box-button-line--hide");
@@ -42,14 +47,7 @@ const handleFaq = (faqContainer, i) => {
   const isActive = faqContainer.offsetHeight > 0;
   const textHeight = faqTexts[i].offsetHeight + "px";
   faqContainer.style["max-height"] = isActive ? "0px" : textHeight;
-};
-
-const handleInput = (e) => {
-  const input = e.target;
-  input.classList.toggle(
-    "contact-form__field-input--not-empty",
-    input.value.length > 0
-  );
+  toggleElementsTabIndex(containerFocusableChilds);
 };
 
 const updateFaqContainersHeight = () => {
@@ -58,6 +56,29 @@ const updateFaqContainersHeight = () => {
       container.style["max-height"] = faqTexts[i].offsetHeight + "px";
     }
   });
+};
+
+const toggleElementsTabIndex = (els) => {
+  els.forEach((el) => {
+    el.tabIndex = el.tabIndex === 0 ? -1 : 0;
+  });
+};
+
+// OTHERS 
+
+const handleInput = (e) => {
+  const input = e.target;
+  input.classList.toggle(
+    "contact-form__field-input--not-empty",
+    input.value.length > 0
+  );
+};
+const toggleNavBackground = () => {
+  nav.classList.toggle("nav--scroll-bgc", nav.classList.contains("nav--active") || window.scrollY > 0)
+  nav.classList.toggle(
+    "nav--scroll-border",
+    window.scrollY > window.innerHeight
+  );
 };
 
 const onResize = () => {
@@ -105,30 +126,27 @@ const onKeydown = (e) => {
     return;
   }
 
-  if (e.shiftKey && document.activeElement === firstFocusableChild) {
-    lastFocusableChild.focus();
+  if (e.shiftKey && document.activeElement === navFirstFocusableChild) {
+    navLastFocusableChild.focus();
     e.preventDefault();
   }
 
-  if (!e.shiftKey && document.activeElement === lastFocusableChild) {
-    firstFocusableChild.focus();
+  if (!e.shiftKey && document.activeElement === navLastFocusableChild) {
+    navFirstFocusableChild.focus();
     e.preventDefault();
   }
 };
 
-const updateNavLinksTabIndex = () => {
-  navLinks.forEach((link) => {
-    link.tabIndex = isTrappedTabulation || window.innerWidth > 1024 ? 0 : -1;
-  });
-};
-
+// LISTENERS 
 hamburgerButton.addEventListener("click", handleNav);
 navLinks.forEach((link) => {
   link.addEventListener("click", handleNav);
 });
 faqBoxes.forEach((box, i) => {
   const container = faqContainers[i];
-  box.addEventListener("click", () => handleFaq(container, i));
+  const focusableChilds = getFocusableChilds(container);
+  toggleElementsTabIndex(focusableChilds);
+  box.addEventListener("click", () => handleFaq(container, i, focusableChilds));
 });
 inputs.forEach((input) => {
   input.addEventListener("blur", handleInput);
