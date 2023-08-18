@@ -24,3 +24,7 @@ HTML, SCSS, JavaScript, Gulp
 ```bash
 gulp
 ```
+
+## Copyright
+
+**Code & Design:** Me
