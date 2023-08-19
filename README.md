@@ -2,7 +2,7 @@
 
 Mentoring and IT development tailored to your needs.
 
-[<img src="./github/homepage.png" alt="Page Screenshot">](https://marcing20067.github.io/it-mentor/)
+[<img src="./github/hero.png" alt="Page Screenshot">](https://marcing20067.github.io/it-mentor/)
 
 ## Demo
 
